@@ -13,6 +13,9 @@
 		38041BC821CB490300D16C7D /* WishList2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 38041BC621CB490300D16C7D /* WishList2.xcdatamodeld */; };
 		38041BCA21CB490700D16C7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38041BC921CB490700D16C7D /* Assets.xcassets */; };
 		38041BCD21CB490700D16C7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38041BCB21CB490700D16C7D /* LaunchScreen.storyboard */; };
+		38041BD521CB55CD00D16C7D /* ProductListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38041BD421CB55CD00D16C7D /* ProductListTableViewController.swift */; };
+		38041BD721D1803E00D16C7D /* ProductDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38041BD621D1803E00D16C7D /* ProductDetailsVC.swift */; };
+		38041BD921D1ED2100D16C7D /* addNewProductVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38041BD821D1ED2100D16C7D /* addNewProductVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		38041BC921CB490700D16C7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		38041BCC21CB490700D16C7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		38041BCE21CB490700D16C7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38041BD421CB55CD00D16C7D /* ProductListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListTableViewController.swift; sourceTree = "<group>"; };
+		38041BD621D1803E00D16C7D /* ProductDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsVC.swift; sourceTree = "<group>"; };
+		38041BD821D1ED2100D16C7D /* addNewProductVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addNewProductVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,9 @@
 				38041BBF21CB490300D16C7D /* AppDelegate.swift */,
 				38041BC121CB490300D16C7D /* ViewController.swift */,
 				38041BC321CB490300D16C7D /* Main.storyboard */,
+				38041BD621D1803E00D16C7D /* ProductDetailsVC.swift */,
+				38041BD421CB55CD00D16C7D /* ProductListTableViewController.swift */,
+				38041BD821D1ED2100D16C7D /* addNewProductVC.swift */,
 				38041BC921CB490700D16C7D /* Assets.xcassets */,
 				38041BCB21CB490700D16C7D /* LaunchScreen.storyboard */,
 				38041BCE21CB490700D16C7D /* Info.plist */,
@@ -139,8 +148,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				38041BC221CB490300D16C7D /* ViewController.swift in Sources */,
+				38041BD921D1ED2100D16C7D /* addNewProductVC.swift in Sources */,
 				38041BC021CB490300D16C7D /* AppDelegate.swift in Sources */,
+				38041BD721D1803E00D16C7D /* ProductDetailsVC.swift in Sources */,
 				38041BC821CB490300D16C7D /* WishList2.xcdatamodeld in Sources */,
+				38041BD521CB55CD00D16C7D /* ProductListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +299,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R557EG7BZV;
 				INFOPLIST_FILE = WishList2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -304,6 +317,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R557EG7BZV;
 				INFOPLIST_FILE = WishList2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

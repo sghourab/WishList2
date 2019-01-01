@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ProductDetails" representedClassName="ProductDetails" syncable="YES" codeGenerationType="class">
+        <attribute name="productDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="productTitle" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ProductName" representedClassName="ProductName" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="productImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="productTitle" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ProductDetails" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="ProductName" positionX="-45" positionY="27" width="128" height="90"/>
+    </elements>
 </model>
