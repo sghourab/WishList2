@@ -26,7 +26,7 @@ class ProductDetailsVC: UIViewController {
             productImage.image = UIImage(data: image)
             
         } else {
-            productImage?.image = UIImage(named: "photo4")
+            productImage?.image = UIImage(named: "product")
         }
         productDescription.text = product.productDescription
     }

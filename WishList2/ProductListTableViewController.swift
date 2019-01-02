@@ -54,7 +54,7 @@ class ProductListTableViewController: UITableViewController {
         cell.imageView?.image = UIImage(data: imageListed)
         }
         else {
-           cell.imageView?.image = UIImage(named: "photo4")
+           cell.imageView?.image = UIImage(named: "product")
             
         }
 

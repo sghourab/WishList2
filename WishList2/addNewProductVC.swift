@@ -14,6 +14,8 @@ var image:UIImage?
 let request: NSFetchRequest<ProductDetails> = ProductDetails.fetchRequest()
 var productArray = [ProductDetails]()
 
+
+
 class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var productTitleLabel: UITextField!
@@ -39,8 +41,13 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
         
         let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         print(dataFilePath)
-   
-       hideKeyboardWhenTappedAround()
+        //setting up placeholder for product description text view
+        
+        productDescriptionTextView.delegate = self
+        productDescriptionTextView.text = "Enter product description here"
+        productDescriptionTextView.textColor = UIColor.lightGray
+       
+        hideKeyboardWhenTappedAround()
         
     }
 
@@ -109,17 +116,26 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+   
+    
+    //MARK:- Adding a placeholder to textview
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
     }
-    */
-
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == ""{
+            textView.textColor = UIColor.lightGray
+            textView.text = "Enter product description here"
+        }
+    }
 }
+
+
+
+//MARK:- hiding keyboard when editing done
 
 extension UIViewController {
     func hideKeyboardWhenTappedAround(){
