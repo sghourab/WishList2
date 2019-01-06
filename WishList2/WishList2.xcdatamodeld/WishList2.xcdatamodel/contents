@@ -4,6 +4,11 @@
         <attribute name="productDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productImage" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="productTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="image" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ProductImage" inverseName="productDetails" inverseEntity="ProductImage" syncable="YES"/>
+    </entity>
+    <entity name="ProductImage" representedClassName="ProductImage" syncable="YES" codeGenerationType="class">
+        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="productDetails" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProductDetails" inverseName="image" inverseEntity="ProductDetails" syncable="YES"/>
     </entity>
     <entity name="ProductName" representedClassName="ProductName" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -11,7 +16,8 @@
         <attribute name="productTitle" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ProductDetails" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="ProductImage" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ProductDetails" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="ProductName" positionX="-45" positionY="27" width="128" height="90"/>
     </elements>
 </model>
