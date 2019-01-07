@@ -20,6 +20,7 @@
 		38A70E0221DDDC520055DEA5 /* ProductDetailsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A70E0121DDDC520055DEA5 /* ProductDetailsCollectionView.swift */; };
 		38A70E0621DEB2B40055DEA5 /* AddPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A70E0521DEB2B40055DEA5 /* AddPhotoVC.swift */; };
 		38A70E0821DEC5E70055DEA5 /* AddPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A70E0721DEC5E70055DEA5 /* AddPhotoCollectionViewCell.swift */; };
+		38D437E721E1FA69006492E7 /* photoFullScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D437E621E1FA69006492E7 /* photoFullScreenVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		38A70E0121DDDC520055DEA5 /* ProductDetailsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsCollectionView.swift; sourceTree = "<group>"; };
 		38A70E0521DEB2B40055DEA5 /* AddPhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoVC.swift; sourceTree = "<group>"; };
 		38A70E0721DEC5E70055DEA5 /* AddPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		38D437E621E1FA69006492E7 /* photoFullScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = photoFullScreenVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 			children = (
 				38A70E0521DEB2B40055DEA5 /* AddPhotoVC.swift */,
 				38A70E0721DEC5E70055DEA5 /* AddPhotoCollectionViewCell.swift */,
+				38D437E621E1FA69006492E7 /* photoFullScreenVC.swift */,
 			);
 			path = "Add photo VC and CVC";
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 				38041BD521CB55CD00D16C7D /* ProductListTableViewController.swift in Sources */,
 				38A70E0821DEC5E70055DEA5 /* AddPhotoCollectionViewCell.swift in Sources */,
 				38A70E0221DDDC520055DEA5 /* ProductDetailsCollectionView.swift in Sources */,
+				38D437E721E1FA69006492E7 /* photoFullScreenVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

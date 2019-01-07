@@ -17,6 +17,7 @@ class ProductListTableViewController: UITableViewController {
     //let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         print(dataFilePath)
@@ -90,12 +91,11 @@ class ProductListTableViewController: UITableViewController {
         if segue.identifier == "goToDetails"{
         let destinationVC = segue.destination as! ProductDetailsVC
         
-        if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.productArrayIndex = indexPath.row
+        destinationVC.index
         }
     }
         
-    }
+    
     //MARK: - SAVE AND LOAD TO CORE DATA FUNCTIONS
     
     
@@ -110,5 +110,6 @@ class ProductListTableViewController: UITableViewController {
         tableView.reloadData()
     }
    
-
+    
 }
+

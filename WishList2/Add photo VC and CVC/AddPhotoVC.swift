@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
 class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    @IBOutlet weak var tempImageView: UIImageView!
-    var imageArray = [ProductImage]()
-    //var images = [UIImage]()
+    
+//    var imageArray = [ProductImage]()
+    var tempImageArray = [UIImage]()
+    var imageIndex = Int()
+    
 
     @IBOutlet weak var addImagesCollectionView: UICollectionView!
     
@@ -20,7 +23,9 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       // deleteAllData(entity: "ProductImage")
+        loadImages()
+        addImagesCollectionView.reloadData()
         // Do any additional setup after loading the view.
         addImagesCollectionView.delegate = self
         addImagesCollectionView.dataSource = self
@@ -33,30 +38,64 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageArray.count
+        return 9
+        //return imageArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addPhoto", for: indexPath) as! AddPhotoCollectionViewCell
-        
        
-        
-        let collectionViewImage = imageArray[indexPath.row].image
-        
-        cell.addPhotoImage?.image = UIImage(data: collectionViewImage!)
-        
+      // If the number of photos is greater than the index of the current cell being populated
+       if (imageArray.count > indexPath.item)
+       {
+        cell.cellImage?.image = UIImage(data: (imageArray[indexPath.item].image!))
+        cell.cellType = "productPhoto"
     
+        }
+       else if indexPath.item == imageArray.count {
         
-        
+        cell.cellImage?.image = UIImage(named: "cameraAdd")
+        cell.cellType = "addAction"
+       }
+       else{
+        cell.cellImage?.image = UIImage(named: "imagePlaceholder")
+        cell.cellType = "dummyImage"
+        }
+
         return cell
+//
     }
     
     
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! AddPhotoCollectionViewCell
+        
+        
+        if cell.cellType == "addAction"{
+        takePhotoAction(cell)
+        }
+        else if cell.cellType == "productPhoto" {
+        imageIndex = indexPath.item
+            performSegue(withIdentifier: "goToPhotoEdit", sender: self)
+            
+        
+            print("imageIndex:  \(imageIndex)")
+        
+   }
+    }
    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToPhotoEdit"{
+            let destinationVC = segue.destination as! photoFullScreenVC
+            
+        destinationVC.imageArrayIndex = imageIndex
+            
+        }
+        
+    }
     
-    @IBAction func takePhotoAction(_ sender: Any) {
+    func takePhotoAction(_ sender: Any) {
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerController.SourceType.camera
         imagePicker.allowsEditing = true
@@ -65,10 +104,13 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            
             let newImage = ProductImage(context: context)
             newImage.image = pickedImage.jpegData(compressionQuality: 1)
             imageArray.append(newImage)
-            tempImageView.image = pickedImage
+            
+            tempImageArray.append(pickedImage)
+            
             
             addImagesCollectionView.reloadData()
             saveImage()
@@ -91,14 +133,33 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
         }
     }
     
-    func loadImage(){
+    func loadImages(){
         
+        let request: NSFetchRequest<ProductImage> = ProductImage.fetchRequest()
         
-        do {
-            productArray = try context.fetch(request)
-        } catch {
-            print("error loading items: \(error)")
+        do{
+            imageArray = try context.fetch(request)
+        } catch{
+            print("error loading images: \(error)")
         }
-        addImagesCollectionView.reloadData()
     }
+    
+//    func deleteAllData(entity: String) {
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+//        fetchRequest.returnsObjectsAsFaults = false
+//
+//        do
+//        {
+//            let results = try managedContext.fetch(fetchRequest)
+//            for managedObject in results
+//            {
+//                let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
+//                managedContext.delete(managedObjectData)
+//            }
+//        } catch let error as NSError {
+//            print("Delete all data in \(entity) error : \(error) \(error.userInfo)")
+//        }
+//    }
 }

@@ -10,7 +10,9 @@ import UIKit
 
 class AddPhotoCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var addPhotoImage: UIImageView!
+    @IBOutlet weak var cellImage: UIImageView!
+    
+    var cellType: String?
     
         
     
