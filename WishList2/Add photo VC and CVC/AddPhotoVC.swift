@@ -9,13 +9,23 @@
 import UIKit
 import CoreData
 
-class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+
+protocol ImagesAddedDelegate: class {
+    func photoSelectionCompleted(images: [UIImage])
+}
+
+
+
+class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DataEnteredDelegate {
     
+
+
+    var imageArrayAddPhotoVC: [UIImage] = []
     
-//    var imageArray = [ProductImage]()
-    var tempImageArray = [UIImage]()
     var imageIndex = Int()
     
+    weak var delegate: ImagesAddedDelegate? = nil
 
     @IBOutlet weak var addImagesCollectionView: UICollectionView!
     
@@ -23,23 +33,28 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // deleteAllData(entity: "ProductImage")
-        loadImages()
+       
+        //loadImages()
+        
         addImagesCollectionView.reloadData()
-        // Do any additional setup after loading the view.
+        
         addImagesCollectionView.delegate = self
+       
         addImagesCollectionView.dataSource = self
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         addImagesCollectionView.reloadData()
+        
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return 9
-        //return imageArray.count
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -47,13 +62,13 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addPhoto", for: indexPath) as! AddPhotoCollectionViewCell
        
       // If the number of photos is greater than the index of the current cell being populated
-       if (imageArray.count > indexPath.item)
+        if (imageArrayAddPhotoVC.count > indexPath.item)
        {
-        cell.cellImage?.image = UIImage(data: (imageArray[indexPath.item].image!))
+        cell.cellImage?.image =  imageArrayAddPhotoVC[indexPath.item]
         cell.cellType = "productPhoto"
     
         }
-       else if indexPath.item == imageArray.count {
+        else if indexPath.item == imageArrayAddPhotoVC.count {
         
         cell.cellImage?.image = UIImage(named: "cameraAdd")
         cell.cellType = "addAction"
@@ -84,16 +99,41 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
         
    }
     }
-   
+    // MARK:- Preparing to segue forward into photoFullScreenVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToPhotoEdit"{
             let destinationVC = segue.destination as! photoFullScreenVC
             
         destinationVC.imageArrayIndex = imageIndex
+            destinationVC.imagesArray = imageArrayAddPhotoVC
+        destinationVC.delegate = self
+            
+        
+        }
+        
+    }
+    
+    //MARK:- this function is called when going back to addNewProductVC. Allows the passing of the image Array.
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParent {
+           
+            delegate?.photoSelectionCompleted(images: imageArrayAddPhotoVC)
+            
             
         }
         
     }
+    
+    //MARK:- function to allow passing of images backward from photoFullScreenVC to AddPhotoVC
+    
+    func userDidAddImages(images: [UIImage]) {
+        imageArrayAddPhotoVC = images
+    }
+    
+    //MARK:- Actions to take photo.
     
     func takePhotoAction(_ sender: Any) {
         imagePicker.delegate = self
@@ -105,11 +145,14 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             
-            let newImage = ProductImage(context: context)
-            newImage.image = pickedImage.jpegData(compressionQuality: 1)
-            imageArray.append(newImage)
+            /////Need to pass back all the details commented out below
             
-            tempImageArray.append(pickedImage)
+//            let newImage = ProductImage(context: context)
+//            newImage.image = pickedImage.jpegData(compressionQuality: 1)
+//            newImage.parentProductDetails = selectedProduct
+//            imageArray.append(newImage)
+            
+            imageArrayAddPhotoVC.append(pickedImage)
             
             
             addImagesCollectionView.reloadData()

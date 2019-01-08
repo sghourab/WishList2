@@ -74,13 +74,13 @@
 			children = (
 				38041BD821D1ED2100D16C7D /* addNewProductVC.swift */,
 				38D437E521E1B8BB006492E7 /* Add photo VC and CVC */,
-				38041BBF21CB490300D16C7D /* AppDelegate.swift */,
+				38041BD421CB55CD00D16C7D /* ProductListTableViewController.swift */,
 				38041BC121CB490300D16C7D /* ViewController.swift */,
 				38041BC321CB490300D16C7D /* Main.storyboard */,
 				38A70E0121DDDC520055DEA5 /* ProductDetailsCollectionView.swift */,
 				38A70DFF21DDD82B0055DEA5 /* ProductDetailsCollectionViewCell.swift */,
 				38041BD621D1803E00D16C7D /* ProductDetailsVC.swift */,
-				38041BD421CB55CD00D16C7D /* ProductListTableViewController.swift */,
+				38041BBF21CB490300D16C7D /* AppDelegate.swift */,
 				38041BC921CB490700D16C7D /* Assets.xcassets */,
 				38041BCB21CB490700D16C7D /* LaunchScreen.storyboard */,
 				38041BCE21CB490700D16C7D /* Info.plist */,
@@ -92,8 +92,8 @@
 		38D437E521E1B8BB006492E7 /* Add photo VC and CVC */ = {
 			isa = PBXGroup;
 			children = (
-				38A70E0521DEB2B40055DEA5 /* AddPhotoVC.swift */,
 				38A70E0721DEC5E70055DEA5 /* AddPhotoCollectionViewCell.swift */,
+				38A70E0521DEB2B40055DEA5 /* AddPhotoVC.swift */,
 				38D437E621E1FA69006492E7 /* photoFullScreenVC.swift */,
 			);
 			path = "Add photo VC and CVC";

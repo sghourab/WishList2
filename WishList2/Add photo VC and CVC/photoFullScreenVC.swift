@@ -9,42 +9,62 @@
 import UIKit
 import CoreData
 
+
+//MUST SEND DATA BACKWARDS IF PHOTO DELETED!!!!////////
+
+
 var imageArray = [ProductImage]()
 
+protocol DataEnteredDelegate: class {
+    func userDidAddImages(images: [UIImage])
+}
+
+/////////////////////////////////////////
+
 class photoFullScreenVC: UIViewController {
+    
     @IBOutlet weak var fullScreenPhoto: UIImageView!
     
     var imageArrayIndex = Int()
+    
+    var imagesArray = [UIImage]()
+    
+    weak var delegate: DataEnteredDelegate? = nil
     
     
     override func viewDidLoad() {
         //print(imageArrayIndex)
         super.viewDidLoad()
-        loadImages()
-        let fullSizePhoto = UIImage(data: imageArray[imageArrayIndex].image!)
+        //loadImages()
+        let fullSizePhoto = imagesArray[imageArrayIndex]
         fullScreenPhoto.image = fullSizePhoto
-        // Do any additional setup after loading the view.
-    }
+            }
     
     
+    //MARK:- pressing the delete button fires func below. Image will be removed from imagesArray.
     
     @IBAction func deletePhotoAction(_ sender: Any) {
         
-        let image = imageArray[imageArrayIndex]
-        imageArray.remove(at: imageArrayIndex)
-        context.delete(image)
+        let image = imagesArray[imageArrayIndex]
+        imagesArray.remove(at: imageArrayIndex)
+        //context.delete(image)
         fullScreenPhoto.image = UIImage(named: "imagePlaceholder")
     }
     
-    /*
-    // MARK: - Navigation
+    
+  
+    //MARK:- func below will be fired after pressing back button. It allows sending the array of Images back to the AddPhotoVC. i.e. from imagesArray in current VC to tempImageArray in AddPhotoVC.
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParent {
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+            delegate?.userDidAddImages(images: imagesArray)
+
+    
+        }
     }
-    */
  
     func loadImages(){
         
@@ -56,4 +76,6 @@ class photoFullScreenVC: UIViewController {
             print("error loading images: \(error)")
         }
     }
+    
+    
 }

@@ -16,23 +16,20 @@ var productArray = [ProductDetails]()
 
 
 
-class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImagesAddedDelegate {
+    
     
     @IBOutlet weak var productTitleLabel: UITextField!
+    
     @IBOutlet weak var productUIImage: UIImageView!
+   
     @IBOutlet weak var productDescriptionTextView: UITextView!
-    
-    
-    
-    
-    
-    
     
     
     
     let imagePicker = UIImagePickerController()
     
-    
+    var imageArrayaddNewProductVC = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,8 +70,41 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
     //MARK:- Upload an Image from Media
     
    
+    //MARK:- Perform Segue Methods
     
-    //:- Update Core Data with new Product save button Action
+    @IBAction func addPhotosVCSegueAction(_ sender: Any) {
+        performSegue(withIdentifier: "goToAddPhotosVC", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToAddPhotosVC" {
+            
+            let destinationVC = segue.destination as! AddPhotoVC
+            destinationVC.delegate = self
+            
+            destinationVC.imageArrayAddPhotoVC = imageArrayaddNewProductVC
+            
+
+        }
+    }
+    
+    //MARK:- this func will be fired when going back from AddPhotoVC to current VC.
+    
+    func photoSelectionCompleted(images: [UIImage]) {
+       
+     if images == [] {
+    productUIImage.image = UIImage(named: "imagePlaceholder")
+} else {
+    productUIImage.image = images[0]
+    imageArrayaddNewProductVC = images
+        
+        
+      }
+            
+        
+    }
+   
+    //MARK:- Update Core Data with new Product save button Action
     @IBAction func saveDetailsAction(_ sender: Any) {
         
         let newProduct = ProductDetails(context: context)

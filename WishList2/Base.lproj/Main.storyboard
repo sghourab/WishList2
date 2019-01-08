@@ -36,12 +36,13 @@
                     <navigationItem key="navigationItem" title="Title" id="Iel-gI-Ib3">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="AXe-7m-Jsg">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" identifier="goToNewItem" id="wH9-PU-o6W"/>
+                                <action selector="addNewProductAction:" destination="zgJ-HN-axN" id="tCF-gt-een"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="vaB-jx-rIj" kind="show" identifier="goToDetails" id="m3P-Ev-jMG"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="goToNewItem" id="Yam-0K-mtn"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0zo-SQ-xKJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -172,7 +173,7 @@
                                 <rect key="frame" x="189" y="300" width="186" height="30"/>
                                 <state key="normal" title="Upload Photo"/>
                                 <connections>
-                                    <segue destination="AnR-P3-ejD" kind="show" id="pEF-C6-7ZT"/>
+                                    <action selector="addPhotosVCSegueAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pXR-PC-Ilv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQC-BS-2zV">
@@ -218,6 +219,7 @@
                         <outlet property="productDescriptionTextView" destination="ceu-Mb-w7g" id="9FY-ah-e9k"/>
                         <outlet property="productTitleLabel" destination="28T-j0-eGF" id="wfW-o1-3kA"/>
                         <outlet property="productUIImage" destination="rcX-jK-BLL" id="UY0-fA-PIV"/>
+                        <segue destination="AnR-P3-ejD" kind="show" identifier="goToAddPhotosVC" id="qRG-4f-8ZW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -288,10 +290,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wka-Xe-vIY">
-                                <rect key="frame" x="0.0" y="39" width="375" height="529"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nPW-aQ-V7g">
                                 <rect key="frame" x="143" y="602" width="89" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -300,6 +298,10 @@
                                     <action selector="deletePhotoAction:" destination="HTf-bm-puB" eventType="touchUpInside" id="H7O-nw-fp7"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wka-Xe-vIY">
+                                <rect key="frame" x="0.0" y="69" width="375" height="529"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="khB-7C-Vnb"/>

@@ -31,6 +31,11 @@ class ProductListTableViewController: UITableViewController {
         tableView.reloadData()
         
     }
+    
+    //MARK: - Add New Product Action
+    @IBAction func addNewProductAction(_ sender: Any) {
+        performSegue(withIdentifier: "goToNewItem", sender: self)
+    }
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,14 +93,18 @@ class ProductListTableViewController: UITableViewController {
         }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+      
         if segue.identifier == "goToDetails"{
+        
         let destinationVC = segue.destination as! ProductDetailsVC
         
-        destinationVC.index
-        }
+//
+            //destinationVC.index
     }
         
     
+    }
     //MARK: - SAVE AND LOAD TO CORE DATA FUNCTIONS
     
     
@@ -112,4 +121,5 @@ class ProductListTableViewController: UITableViewController {
    
     
 }
+
 

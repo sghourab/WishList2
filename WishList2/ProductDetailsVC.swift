@@ -20,11 +20,11 @@ class ProductDetailsVC: UIViewController {
     
     var imageArray = [ProductImage]()
     
-    var selectedProduct: ProductDetails? {
-        didSet {
-            loadImages()
-        }
-    }
+//    var selectedProduct: ProductDetails? {
+//        didSet {
+//            loadImages()
+//        }
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,15 +75,15 @@ extension ProductDetailsVC: UICollectionViewDataSource {
     }
     //MARK:- loading Images from Core Data Entity 'Image'
     
-    func loadImages(){
-        
-        let request: NSFetchRequest<ProductImage> = ProductImage.fetchRequest()
-        
-        do{
-            imageArray = try context.fetch(request)
-        } catch{
-            print("error loading images: \(error)")
-        }
-        collectionView.reloadData()
-    }
+//    func loadImages(){
+//        
+//        let request: NSFetchRequest<ProductImage> = ProductImage.fetchRequest()
+//        
+//        do{
+//            imageArray = try context.fetch(request)
+//        } catch{
+//            print("error loading images: \(error)")
+//        }
+//        collectionView.reloadData()
+//    }
 }
