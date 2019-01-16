@@ -12,18 +12,24 @@ import CoreData
 
 class ProductListTableViewController: UITableViewController {
 
-    //var productNameArray = [ProductDetails]()
+ 
     
-    //let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     override func viewDidLoad() {
         super.viewDidLoad()
         
 
         let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         print(dataFilePath)
+       
         loadProductNameList()
-        print(productArray)
+        loadProductImagesList()
+        
+        
+        print(productArrayforCD)
+        
         tableView.reloadData()
+        
+        
         
         
     }
@@ -45,26 +51,16 @@ class ProductListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return productArray.count
+        return productArrayforCD.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductList", for: indexPath)
         
-        let productName = productArray[indexPath.row]
+        let productName = productArrayforCD[indexPath.row]
+        
         cell.textLabel?.text = productName.productTitle
-        if let imageListed = productName.productImage
-        {
-    
-        cell.imageView?.image = UIImage(data: imageListed)
-        }
-        else {
-           cell.imageView?.image = UIImage(named: "product")
-            
-        }
-
-        // Configure the cell...
 
         return cell
     }
@@ -72,6 +68,8 @@ class ProductListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToDetails", sender: self)
     }
+    
+    
     
     //MARK:- DELETING DATA FROM PRODUCT LIST AND CORE DATA
   
@@ -84,8 +82,8 @@ class ProductListTableViewController: UITableViewController {
         
         if editingStyle == .delete {
             
-        let product = productArray[indexPath.row]
-        productArray.remove(at: indexPath.row)
+        let product = productArrayforCD[indexPath.row]
+        productArrayforCD.remove(at: indexPath.row)
         context.delete(product)
             
         tableView.reloadData()
@@ -99,26 +97,55 @@ class ProductListTableViewController: UITableViewController {
         
         let destinationVC = segue.destination as! ProductDetailsVC
         
+            guard let selectedRow = self.tableView.indexPathForSelectedRow?.row else {
+                return
+            }
+        destinationVC.selectedProduct = productArrayforCD[selectedRow]
+            
+           
+        }
+        
 //
             //destinationVC.index
     }
         
     
-    }
+    
     //MARK: - SAVE AND LOAD TO CORE DATA FUNCTIONS
     
     
     func loadProductNameList(){
-        //let request:NSFetchRequest<ProductDetails> = ProductDetails.fetchRequest()
         
+        let request:NSFetchRequest<ProductDetails> = ProductDetails.fetchRequest()
+        
+  
         do {
-            productArray = try context.fetch(request)
+            productArrayforCD = try context.fetch(request)
+            //imageArrayforCD = try context.fetch(imageRequest)
         } catch {
             print("error loading category context: \(error)")
         }
         tableView.reloadData()
     }
    
+    func loadProductImagesList() {
+        
+        let imageRequest: NSFetchRequest<ProductImage> = ProductImage.fetchRequest()
+        
+       // let productPredicate = NSPredicate(format: "parentProductDetails.productTitle MATCHES %@", productNameGlobal)
+        
+        //imageRequest.predicate = productPredicate
+        
+        do {
+            imageArrayforCD = try context.fetch(imageRequest)
+        } catch {
+            print("error loading images context: \(error)")
+        }
+        tableView.reloadData()
+        
+        
+        
+    }
     
 }
 

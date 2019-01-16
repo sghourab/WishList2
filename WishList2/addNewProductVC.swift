@@ -9,10 +9,19 @@
 import UIKit
 import CoreData
 
+
+////Images not sent back properly to imageArrayAddNewProductVC
 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
 var image:UIImage?
+
 let request: NSFetchRequest<ProductDetails> = ProductDetails.fetchRequest()
-var productArray = [ProductDetails]()
+
+let imageRequest: NSFetchRequest<ProductImage> = ProductImage.fetchRequest()
+
+var productArrayforCD = [ProductDetails]()
+
+var imageArrayforCD = [ProductImage]()
 
 
 
@@ -25,9 +34,10 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
    
     @IBOutlet weak var productDescriptionTextView: UITextView!
     
+   
     
     
-    let imagePicker = UIImagePickerController()
+    //let imagePicker = UIImagePickerController()
     
     var imageArrayaddNewProductVC = [UIImage]()
     
@@ -49,25 +59,7 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
     }
 
     
-    //MARK: - Take a Photo Action
     
-    @IBAction func takeAPhotoAction(_ sender: Any) {
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerController.SourceType.camera
-        imagePicker.allowsEditing = true
-        self.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            productUIImage.image = pickedImage
-            image = pickedImage
-            productUIImage.contentMode = .scaleAspectFill
-        }
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    //MARK:- Upload an Image from Media
     
    
     //MARK:- Perform Segue Methods
@@ -77,12 +69,16 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "goToAddPhotosVC" {
             
             let destinationVC = segue.destination as! AddPhotoVC
+            
             destinationVC.delegate = self
             
             destinationVC.imageArrayAddPhotoVC = imageArrayaddNewProductVC
+            
+          //  destinationVC.imageArrayAddPhotoVC = imageArrayaddNewProductVC
             
 
         }
@@ -97,6 +93,7 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
 } else {
     productUIImage.image = images[0]
     imageArrayaddNewProductVC = images
+   
         
         
       }
@@ -110,12 +107,45 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
         let newProduct = ProductDetails(context: context)
         newProduct.productTitle = productTitleLabel.text
         newProduct.productDescription = productDescriptionTextView.text
-        
-        //guard let imageData = UIImageJPEGRepresentation
-        let imageData = image?.jpegData(compressionQuality: 1)
-        newProduct.productImage = imageData
-        productArray.append(newProduct)
+        productArrayforCD.append(newProduct)
+      
         saveProduct()
+       
+//        let newImage = ProductImage(context: context)
+//        let image1 = imageArrayaddNewProductVC[0]
+//        let image1Data = image1.jpegData(compressionQuality: 1)
+//        newImage.image = image1Data
+//        newProduct.addToImage(newImage)
+//        saveProduct()
+//
+//        let newImage2 = ProductImage(context: context)
+//        let image2 = imageArrayaddNewProductVC[1]
+//        let image2Data = image2.jpegData(compressionQuality: 1)
+//        newImage.image = image2Data
+//        newProduct.addToImage(newImage2)
+//        saveProduct()
+        
+        for image in imageArrayaddNewProductVC {
+        let newImage = ProductImage(context: context)
+        let imageData = image.jpegData(compressionQuality: 1)
+
+            //newImage.parentProductDetails = newProduct
+            newImage.image = imageData
+            newProduct.addToImage(newImage)
+
+            print("imageData : \(imageData)")
+           // imageArrayforCD.append(newImage)
+            print("imageData: \(newImage)")
+            print("imageArrayaddNewProductVC: \(imageArrayaddNewProductVC.count)")
+            print("imageArrayforCD count : \(imageArrayforCD.count)")
+
+             saveProduct()
+        }
+        
+        
+//        let imageData = image?.jpegData(compressionQuality: 1)
+//        newProduct.productImage = imageData
+        
         
         navigationController?.popViewController(animated: true)
         
@@ -140,7 +170,7 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
         
         
         do {
-            productArray = try context.fetch(request)
+            productArrayforCD = try context.fetch(request)
         } catch {
             print("error loading items: \(error)")
         }
