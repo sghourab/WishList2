@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import OpalImagePicker
+
 
 
 
@@ -17,9 +19,9 @@ protocol ImagesAddedDelegate: class {
 
 
 
-class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DataEnteredDelegate {
+class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DataEnteredDelegate, OpalImagePickerControllerDelegate {
     
-
+    
 
     var imageArrayAddPhotoVC: [UIImage] = []
     
@@ -31,6 +33,8 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
     
     let imagePicker = UIImagePickerController()
     
+    let libraryImagePicker = OpalImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -41,6 +45,8 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
         addImagesCollectionView.delegate = self
        
         addImagesCollectionView.dataSource = self
+        
+        libraryImagePicker.imagePickerDelegate = self
 
     }
     
@@ -163,8 +169,42 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
         addImagesCollectionView.reloadData()
     }
     
-
+    //MARK:- Add image from library
     
+    @IBAction func addImageFromLibraryAction(_ sender: Any) {
+        
+        //Change color of selection overlay to white
+        libraryImagePicker.selectionTintColor = UIColor.white.withAlphaComponent(0.7)
+        
+        //Change color of image tint to black
+        libraryImagePicker.selectionImageTintColor = UIColor.black
+        
+        //Change image to X rather than checkmark
+        libraryImagePicker.selectionImage = UIImage(named: "x_image")
+        
+        //Change status bar style
+        libraryImagePicker.statusBarPreference = UIStatusBarStyle.lightContent
+        
+        //Limit maximum allowed selections to 5
+        libraryImagePicker.maximumSelectionsAllowed = 5
+        
+        present(libraryImagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePicker(_ picker: OpalImagePickerController, didFinishPickingImages images: [UIImage]){
+        libraryImagePicker.dismiss(animated: true, completion: nil)
+        
+        let allImages = images
+        
+        for image in allImages {
+        
+        imageArrayAddPhotoVC.append(image)
+        
+        addImagesCollectionView.reloadData()
+        
+        saveImage()
+        }
+    }
     //MARK:- CORE DATA MANIPULATION METHODS
     
     func saveImage() {
