@@ -19,7 +19,7 @@ protocol ImagesAddedDelegate: class {
 
 
 
-class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DataEnteredDelegate, OpalImagePickerControllerDelegate {
+class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,  UIImagePickerControllerDelegate, UINavigationControllerDelegate,UICollectionViewDelegateFlowLayout, DataEnteredDelegate, OpalImagePickerControllerDelegate {
     
     
 
@@ -56,6 +56,12 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
         
     }
     
+    override func viewWillLayoutSubviews() {
+        addImagesCollectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    
+    //MARK:- CollectionView delegate and datasource methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -105,6 +111,17 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
         
    }
     }
+    
+    //MARK:- Method to set size of custom cells in uicollection view
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (self.view.frame.size.width - 12 * 3) / 3 //some width
+        //let height = width * 1.5 //ratio
+        return CGSize(width: width, height: width)
+    }
+    
     // MARK:- Preparing to segue forward into photoFullScreenVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToPhotoEdit"{

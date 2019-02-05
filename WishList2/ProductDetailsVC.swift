@@ -19,37 +19,24 @@ class ProductDetailsVC: UIViewController {
     var imageArray = [ProductImage]()
     
    var selectedProduct: ProductDetails?
-   //{
-//        didSet {
-//            loadImages()
-//        }
-//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         //loadProductNameList()
-        
-        productLabel.text = selectedProduct?.productTitle
-        productDescription.text = selectedProduct?.productDescription
+        if let selectedProduct = selectedProduct, let productTitle = selectedProduct.productTitle {
+            productLabel.text = "  \(productTitle)"
+            productDescription.text = selectedProduct.productDescription
         collectionView.dataSource = self
         collectionView.delegate = self
+        }
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         self.collectionView.reloadData()
     }
-//    func loadProductNameList(){
-//        //let request:NSFetchRequest<ProductDetails> = ProductDetails.fetchRequest()
-//
-//        do {
-//            productArrayforCD = try context.fetch(request)
-//        } catch {
-//            print("error loading category context: \(error)")
-//        }
-//
-//    }
+
     
 }
 
@@ -81,31 +68,9 @@ extension ProductDetailsVC: UICollectionViewDataSource,  UICollectionViewDelegat
             cell.productUIImage.image = UIImage(named: "product")
         }
         
-        
-        
-        
-//        let imagesInUIImageFormat = setOfImages.map {UIImage(data: ($0))}
-//        print(imagesInUIImageFormat.count)
-//        cell.productUIImage.image = imagesInUIImageFormat[indexPath.item]
-        
-        
-//        if let expense = category?.expenses?[indexPath.row]{
-//            cell.textLabel?.text = expense.name
-        //cell.image = imageArray[indexPath.item]
+
         
         return cell
     }
-    //MARK:- loading Images from Core Data Entity 'Image'
-    
-//    func loadImages(){
-//        
-//        let request: NSFetchRequest<ProductImage> = ProductImage.fetchRequest()
-//        
-//        do{
-//            imageArray = try context.fetch(request)
-//        } catch{
-//            print("error loading images: \(error)")
-//        }
-//        collectionView.reloadData()
-//    }
+
 }
