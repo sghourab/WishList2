@@ -55,7 +55,7 @@ class ProductDetailsVC: UIViewController {
         
         productDescription.layer.cornerRadius = 7
         
-        ////
+        //////// Retrieving product title and description ////////////
         if let selectedProduct = selectedProduct, let productTitle = selectedProduct.productTitle {
             productLabel.text = " \(productTitle)"
             if selectedProduct.productDescription == "Enter product description here" {
@@ -65,6 +65,9 @@ class ProductDetailsVC: UIViewController {
                 productDescription.text = selectedProduct.productDescription
                 
             }
+            
+            //////////////
+            
         collectionView.dataSource = self
         collectionView.delegate = self
         }
