@@ -226,7 +226,7 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
     
     func saveImage() {
         do {
-            try context.save()
+            try productCoreData.context.save()
         }
         catch {
             print("error saving context: \(error)")
@@ -238,7 +238,7 @@ class AddPhotoVC: UIViewController, UICollectionViewDataSource, UICollectionView
         let request: NSFetchRequest<ProductImage> = ProductImage.fetchRequest()
         
         do{
-            imageArray = try context.fetch(request)
+            imageArray = try productCoreData.context.fetch(request)
         } catch{
             print("error loading images: \(error)")
         }

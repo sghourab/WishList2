@@ -25,7 +25,7 @@ class ProductListTableViewController: UITableViewController {
         loadProductImagesList()
         
         
-        print(productArrayforCD)
+       
         
         tableView.reloadData()
         
@@ -51,14 +51,14 @@ class ProductListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return productArrayforCD.count
+        return productCoreData.productArrayforCD.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductList", for: indexPath)
         
-        let productName = productArrayforCD[indexPath.row]
+        let productName = productCoreData.productArrayforCD[indexPath.row]
         
         cell.textLabel?.text = productName.productTitle
 
@@ -82,9 +82,9 @@ class ProductListTableViewController: UITableViewController {
         
         if editingStyle == .delete {
             
-        let product = productArrayforCD[indexPath.row]
-        productArrayforCD.remove(at: indexPath.row)
-        context.delete(product)
+        let product = productCoreData.productArrayforCD[indexPath.row]
+        productCoreData.productArrayforCD.remove(at: indexPath.row)
+        productCoreData.context.delete(product)
             
         tableView.reloadData()
         }
@@ -100,7 +100,7 @@ class ProductListTableViewController: UITableViewController {
             guard let selectedRow = self.tableView.indexPathForSelectedRow?.row else {
                 return
             }
-        destinationVC.selectedProduct = productArrayforCD[selectedRow]
+        destinationVC.selectedProduct = productCoreData.productArrayforCD[selectedRow]
             
            
         }
@@ -120,7 +120,7 @@ class ProductListTableViewController: UITableViewController {
         
   
         do {
-            productArrayforCD = try context.fetch(request)
+            productCoreData.productArrayforCD = try productCoreData.context.fetch(request)
             //imageArrayforCD = try context.fetch(imageRequest)
         } catch {
             print("error loading category context: \(error)")
@@ -137,7 +137,7 @@ class ProductListTableViewController: UITableViewController {
         //imageRequest.predicate = productPredicate
         
         do {
-            imageArrayforCD = try context.fetch(imageRequest)
+            productCoreData.imageArrayforCD = try productCoreData.context.fetch(imageRequest)
         } catch {
             print("error loading images context: \(error)")
         }

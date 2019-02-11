@@ -11,21 +11,26 @@ import CoreData
 
 
 ////Images not sent back properly to imageArrayAddNewProductVC
-let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-var image:UIImage?
+struct productCoreData{
 
-let request: NSFetchRequest<ProductDetails> = ProductDetails.fetchRequest()
+    static let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-let imageRequest: NSFetchRequest<ProductImage> = ProductImage.fetchRequest()
+static var image:UIImage?
 
-var productArrayforCD = [ProductDetails]()
+static let request: NSFetchRequest<ProductDetails> = ProductDetails.fetchRequest()
 
-var imageArrayforCD = [ProductImage]()
+static let imageRequest: NSFetchRequest<ProductImage> = ProductImage.fetchRequest()
 
+static var productArrayforCD = [ProductDetails]()
 
+static var imageArrayforCD = [ProductImage]()
+
+}
 
 class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImagesAddedDelegate {
+    
+ 
     
     
     @IBOutlet weak var productTitleLabel: UITextField!
@@ -104,29 +109,30 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
     //MARK:- Update Core Data with new Product save button Action
     @IBAction func saveDetailsAction(_ sender: Any) {
         
-        let newProduct = ProductDetails(context: context)
+        if productTitleLabel.text == "" {
+
+            let alert = UIAlertController(title: "Please enter a product name", message: "", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+
+            self.present(alert, animated: true)
+        }
+        
+        
+        else {
+            
+        let newProduct = ProductDetails(context: productCoreData.context)
         newProduct.productTitle = productTitleLabel.text
         newProduct.productDescription = productDescriptionTextView.text
-        productArrayforCD.append(newProduct)
+        productCoreData.productArrayforCD.append(newProduct)
       
         saveProduct()
        
-//        let newImage = ProductImage(context: context)
-//        let image1 = imageArrayaddNewProductVC[0]
-//        let image1Data = image1.jpegData(compressionQuality: 1)
-//        newImage.image = image1Data
-//        newProduct.addToImage(newImage)
-//        saveProduct()
-//
-//        let newImage2 = ProductImage(context: context)
-//        let image2 = imageArrayaddNewProductVC[1]
-//        let image2Data = image2.jpegData(compressionQuality: 1)
-//        newImage.image = image2Data
-//        newProduct.addToImage(newImage2)
-//        saveProduct()
+
         
         for image in imageArrayaddNewProductVC {
-        let newImage = ProductImage(context: context)
+        let newImage = ProductImage(context: productCoreData.context)
         let imageData = image.jpegData(compressionQuality: 1)
 
             //newImage.parentProductDetails = newProduct
@@ -137,21 +143,20 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
            // imageArrayforCD.append(newImage)
             print("imageData: \(newImage)")
             print("imageArrayaddNewProductVC: \(imageArrayaddNewProductVC.count)")
-            print("imageArrayforCD count : \(imageArrayforCD.count)")
+            print("imageArrayforCD count : \(productCoreData.imageArrayforCD.count)")
 
              saveProduct()
-        }
+            
+            }
         
         
-//        let imageData = image?.jpegData(compressionQuality: 1)
-//        newProduct.productImage = imageData
         
         
         navigationController?.popViewController(animated: true)
         
         dismiss(animated: true, completion: nil)
 
-        
+        }
         
     }
 
@@ -159,7 +164,7 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
     
     func saveProduct() {
         do {
-            try context.save()
+            try productCoreData.context.save()
         }
         catch {
             print("error saving context: \(error)")
@@ -170,7 +175,7 @@ class addNewProductVC: UIViewController, UITextViewDelegate, UIImagePickerContro
         
         
         do {
-            productArrayforCD = try context.fetch(request)
+            productCoreData.productArrayforCD = try productCoreData.context.fetch(productCoreData.request)
         } catch {
             print("error loading items: \(error)")
         }
@@ -208,9 +213,5 @@ extension UIViewController {
     }
     
     
-//    func routeToParent(segue: UIStoryboardSegue?) {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let destinationVC = storyboard.instantiateViewController(withIdentifier: "backToProducts") as! ProductListTableViewController
-//        var destinationDS = destinationVC.productNameArray
-//    }
+
 }

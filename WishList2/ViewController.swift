@@ -21,6 +21,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate,
     
     @IBOutlet weak var productUIImage: UIImageView!
     @IBOutlet weak var productDescriptionTextView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)

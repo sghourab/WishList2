@@ -71,7 +71,7 @@ class photoFullScreenVC: UIViewController {
         let request: NSFetchRequest<ProductImage> = ProductImage.fetchRequest()
         
         do{
-            imageArray = try context.fetch(request)
+            imageArray = try productCoreData.context.fetch(request)
         } catch{
             print("error loading images: \(error)")
         }
